@@ -21,12 +21,20 @@ if err!=nil {
 }
 fmt.Println("Ping response:",ping)
 
-err=client.Set(context.Background(),"name","elliot",0).Err()
+type person struct{
+	Name string `json:"name"`
+	Age int `json:"age"`
+	occupation string `json:"occupation"`
+}
+
+jsonstring := `{"name":"moneypenny","age":24,"occupation":"programmer"}`
+
+err=client.Set(context.Background(),"person",jsonstring,0).Err()
 if err!= nil{
 	fmt.Println(err.Error())
 	return
 }
-val,err :=client.Get(context.Background(),"name").Result()
+val,err :=client.Get(context.Background(),"person").Result()
 if err!= nil{
 	fmt.Println("Error getting value",err.Error())
 	return
